@@ -36,8 +36,8 @@ class Rotor {
         self.series = series
     }
 
-    func advance() {
-        position = position.successor() % Rotor.alphabet.count
+    func advance(count: Int = 1) {
+        position = (position + count) % Rotor.alphabet.count
     }
 
     func encode(c: Character) throws -> Character {

@@ -10,19 +10,21 @@ import XCTest
 @testable import Enigma
 
 class RotorTests: XCTestCase {
+    let alphaSeries = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     let rotorSeries = "EKMFLGDQVZNTOWYHXUSPAIBRCJ"
-    var rotor: Enigma.Rotor!
-
-    override func setUp() {
-        rotor = try! Enigma.Rotor(series: rotorSeries)
-    }
-
-    override func tearDown() {
-        rotor = nil
-    }
 
     func testThatUnadvancedSubstitutionWorks() {
-        for (plainCharacter, cipherCharacter) in zip("ABCDEFGHIJKLMNOPQRSTUVWXYZ".characters, rotorSeries.characters) {
+        let rotor = try! Enigma.Rotor(series: rotorSeries)
+        for (plainCharacter, cipherCharacter) in zip(alphaSeries.characters, rotorSeries.characters) {
+            XCTAssertEqual(try! rotor.encode(plainCharacter), cipherCharacter)
+        }
+    }
+
+    func testThatRotorCanDoRot13() {
+        let rot13Series = "NOPQRSTUVWXYZABCDEFGHIJKLM"
+        let rotor = try! Enigma.Rotor(series: alphaSeries)
+        rotor.advance(13)
+        for (plainCharacter, cipherCharacter) in zip(alphaSeries.characters, rot13Series.characters) {
             XCTAssertEqual(try! rotor.encode(plainCharacter), cipherCharacter)
         }
     }

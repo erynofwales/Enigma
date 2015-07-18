@@ -13,6 +13,7 @@ class Rotor {
     enum Error: ErrorType {
         /** Thrown when the initializer is given an invalid series. */
         case InvalidSeries
+        /** Thrown when encode() encounters a character that is not in the alphabet. */
         case InvalidCharacter
     }
 

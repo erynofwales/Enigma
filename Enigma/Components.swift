@@ -10,8 +10,10 @@ import Foundation
 
 
 enum EncoderError: ErrorType {
-    /** Thrown when an input character is found that is not in the alphabet. */
-    case InvalidCharacter(ch: Character)
+    /** Input character is not in the alphabet. */
+    case CharacterNotInAlphabet(ch: Character)
+    /** Input character is not found in a rotor's series. */
+    case CharacterNotInSeries(ch: Character)
 }
 
 
@@ -24,6 +26,14 @@ protocol Encoder {
 class Cryptor {
     /** Array of all possible characters to encrypt. */
     static let alphabet: [Character] = Array("ABCDEFGHIJKLMNOPQRSTUVWXYZ".characters)
+
+    func indexOfInAlphabet(c: Character) throws -> Int {
+        if let index = Cryptor.alphabet.indexOf(c) {
+            return index
+        } else {
+            throw EncoderError.CharacterNotInAlphabet(ch: c)
+        }
+    }
 }
 
 
@@ -49,18 +59,18 @@ class FixedRotor: Cryptor, Encoder {
     }
 
     func encode(c: Character) throws -> Character {
-        if let offset = FixedRotor.alphabet.indexOf(c) {
-            return series[offset]
-        } else {
-            throw EncoderError.InvalidCharacter(ch: c)
-        }
+        return series[try indexOfInAlphabet(c)]
     }
 
     func inverseEncode(c: Character) throws -> Character {
-        if let offset = series.indexOf(c) {
-            return FixedRotor.alphabet[offset]
+        return Cryptor.alphabet[try indexOfInSeries(c)]
+    }
+
+    func indexOfInSeries(c: Character) throws -> Int {
+        if let index = series.indexOf(c) {
+            return index
         } else {
-            throw EncoderError.InvalidCharacter(ch: c)
+            throw EncoderError.CharacterNotInSeries(ch: c)
         }
     }
 }
@@ -123,19 +133,11 @@ class Rotor: FixedRotor {
     }
 
     override func encode(c: Character) throws -> Character {
-        if let offset = Rotor.alphabet.indexOf(c) {
-            return series[(offset + ringPosition + position) % series.count]
-        } else {
-            throw EncoderError.InvalidCharacter(ch: c)
-        }
+        return series[(try indexOfInAlphabet(c) + ringPosition + position) % series.count]
     }
 
     override func inverseEncode(c: Character) throws -> Character {
-        if let offset = series.indexOf(c) {
-            return Rotor.alphabet[(offset + ringPosition + position) % Rotor.alphabet.count]
-        } else {
-            throw EncoderError.InvalidCharacter(ch: c)
-        }
+        return Cryptor.alphabet[(try indexOfInSeries(c) + ringPosition + position) % Rotor.alphabet.count]
     }
 }
 
@@ -164,12 +166,8 @@ class Reflector: FixedRotor {
 
     func validateReflector(series: [Character]) throws {
         for (offset, c) in series.enumerate() {
-            if let alphabetOffset = Reflector.alphabet.indexOf(c) {
-                if series[alphabetOffset] != Reflector.alphabet[offset] {
-                    throw Error.InvalidReflection
-                }
-            } else {
-                throw EncoderError.InvalidCharacter(ch: c)
+            if series[try indexOfInAlphabet(c)] != Cryptor.alphabet[offset] {
+                throw Error.InvalidReflection
             }
         }
     }
@@ -191,7 +189,7 @@ class Plugboard: Cryptor, Encoder {
         } else if Plugboard.alphabet.contains(c) {
             return c
         } else {
-            throw EncoderError.InvalidCharacter(ch: c)
+            throw EncoderError.CharacterNotInAlphabet(ch: c)
         }
     }
 

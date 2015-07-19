@@ -112,6 +112,11 @@ class Rotor: FixedRotor {
         case EnigmaM4R2Gamma = "FSOKANUERHMBTIYCWLQPZXVGJD"
     }
 
+    override init(series: [Character]) throws {
+        try super.init(series: series)
+        rotatedSeries = series
+    }
+
     convenience init(_ wiring: Wiring) throws {
         try self.init(series: wiring.rawValue)
     }
@@ -128,6 +133,9 @@ class Rotor: FixedRotor {
         willSet {
             self.ringPosition = newValue % series.count
         }
+        didSet {
+            rotatedSeries = Array(series[ringPosition..<series.endIndex]) + Array(series[0..<ringPosition])
+        }
     }
 
     /** An offset at which the adjacent rotor should be advanced by one position. */
@@ -139,16 +147,68 @@ class Rotor: FixedRotor {
         }
     }
 
+    private var rotatedSeries: [Character]!
+
     func advance(count: Int = 1) {
-        position = (position + count) % Rotor.alphabet.count
+        position = (position + count) % series.count
+    }
+
+    func getIndexAdjustedForRotation(c: Character) throws -> Int {
+        let entryPosition = try indexOfInAlphabet(c)
+        let adjustedPosition = (entryPosition + position) % Cryptor.alphabet.count
+        return adjustedPosition
+    }
+
+    func getInverseIndexAdjustedForRotation(c: Character) throws -> Int {
+        let entryPosition = try indexOfInAlphabet(c)
+        let adjustedPosition = (entryPosition + position) % Cryptor.alphabet.count
+        let adjustedChar = Cryptor.alphabet[adjustedPosition]
+        let inversePosition = try indexOfInSeries(adjustedChar)
+        return inversePosition
+    }
+
+    func convertToExitCharacter(c: Character) throws -> Character {
+        let encodedPosition = try indexOfInAlphabet(c)
+        var adjustedPosition = (encodedPosition - position) % Cryptor.alphabet.count
+        if adjustedPosition < 0 {
+            adjustedPosition += Cryptor.alphabet.count
+        }
+        return Cryptor.alphabet[adjustedPosition]
+    }
+
+    func convertToInverseExitCharacter(c: Character) throws -> Character {
+        let encodedPosition = try indexOfInAlphabet(c)
+        var adjustedPosition = (encodedPosition - position) % Cryptor.alphabet.count
+        if adjustedPosition < 0 {
+            adjustedPosition += Cryptor.alphabet.count
+        }
+        return Cryptor.alphabet[adjustedPosition]
     }
 
     override func encode(c: Character) throws -> Character {
-        return series[(try indexOfInAlphabet(c) + ringPosition + position) % series.count]
+        let adjustedPosition = try getIndexAdjustedForRotation(c)
+        let encodedChar = rotatedSeries[adjustedPosition]
+        let finalChar = try convertToExitCharacter(encodedChar)
+        print("Encode (pos \(position): \(c) -> \(finalChar)")
+        return finalChar
     }
 
     override func inverseEncode(c: Character) throws -> Character {
-        return Cryptor.alphabet[(try indexOfInSeries(c) + ringPosition + position) % Rotor.alphabet.count]
+        let adjustedPosition = try getInverseIndexAdjustedForRotation(c)
+        let adjustedChar = rotatedSeries[adjustedPosition]
+        let lookMeUp = try indexOfInSeries(adjustedChar)
+        let decodedChar = Cryptor.alphabet[lookMeUp]
+        let finalChar = try convertToInverseExitCharacter(decodedChar)
+        print("Encode (pos \(position): \(c) -> \(finalChar)")
+        return finalChar
+    }
+
+    override func indexOfInSeries(c: Character) throws -> Int {
+        if let index = rotatedSeries.indexOf(c) {
+            return index
+        } else {
+            throw EncoderError.CharacterNotInSeries(ch: c)
+        }
     }
 }
 

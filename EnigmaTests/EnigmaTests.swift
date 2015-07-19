@@ -41,6 +41,26 @@ class RotorTests: XCTestCase {
 }
 
 
+class ReflectorTests: XCTestCase {
+    func testThatReflectorReflects() {
+        var reflector: Reflector! = nil
+        do {
+            reflector = try Reflector(series: Reflector.Wiring.EnigmaA.rawValue)
+        } catch let error {
+            XCTFail("Error creating reflector: \(error)")
+        }
+        do {
+            let encodeA = try reflector.encode("A")
+            let encodeE = try reflector.encode("E")
+            XCTAssertEqual(encodeA, "E")
+            XCTAssertEqual(encodeE, "A")
+        } catch {
+            XCTFail("Reflector encoding failed")
+        }
+    }
+}
+
+
 class PlugboardTests: XCTestCase {
     func testThatEmptyPlugboardPassesThroughAllCharacters() {
         let plugboard = Plugboard()

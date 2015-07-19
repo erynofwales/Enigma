@@ -80,7 +80,36 @@ class Rotor: FixedRotor {
 }
 
 
-class Reflector: FixedRotor { }
+class Reflector: FixedRotor {
+    enum Wiring: String {
+        case EnigmaA = "EJMZALYXVBWFCRQUONTSPIKHGD"
+        case EnigmaB = "YRUHQSLDPXNGOKMIEBFZCWVJAT"
+        case EnigmaC = "FVPJIAOYEDRZXWGCTKUQSBNMHL"
+        case EnigmaM4R1BThin = "ENKQAUYWJICOPBLMDXZVFTHRGS"
+        case EnigmaM4R1CThin = "RDOBJNTKVEHMLFCWZAXGYIPSUQ"
+    }
+
+    enum Error: ErrorType {
+        case InvalidReflection
+    }
+
+    override init(series: [Character]) throws {
+        try super.init(series: series)
+        try validateReflector(series)
+    }
+
+    func validateReflector(series: [Character]) throws {
+        for (offset, c) in series.enumerate() {
+            if let alphabetOffset = Reflector.alphabet.indexOf(c) {
+                if series[alphabetOffset] != Reflector.alphabet[offset] {
+                    throw Error.InvalidReflection
+                }
+            } else {
+                throw EncoderError.InvalidCharacter(ch: c)
+            }
+        }
+    }
+}
 
 
 /** A Plugboard is a Cryptor that substitutes one character for another based on a set of pairs. A pair of characters is mutually exclusive of other pairs; that is, a character can only belong to one pair. Furthermore, the Plugboard always trades one character for the same character and vice versa. */

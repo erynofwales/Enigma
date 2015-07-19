@@ -43,7 +43,7 @@ class Machine {
         return output
     }
 
-    private func advanceRotors() {
+    func advanceRotors() {
         var shouldAdvance = true    // Always advance the first rotor
         for rotor in rotors.reverse() {
             if shouldAdvance {

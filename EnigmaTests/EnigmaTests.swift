@@ -13,9 +13,45 @@ let alphaSeries = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 
 class MachineTests: XCTestCase {
+    func makeMachine() -> Machine! {
+        do {
+            let rotors = [try Rotor(.EnigmaI), try Rotor(.EnigmaII), try Rotor(.EnigmaIII)]
+            rotors[0].notch = 17
+            rotors[1].notch = 5
+            rotors[2].notch = 22
+            return Machine(rotors: rotors, reflector: try Reflector(.EnigmaB), plugboard: Plugboard())
+        } catch let error {
+            XCTFail("Error while creating machine: \(error)")
+        }
+        // Never reached
+        return nil
+    }
+
     func testThatItTurnsOn() {
-        let machine = try! Machine(rotors: [Rotor(.EnigmaI), Rotor(.EnigmaII), Rotor(.EnigmaIII)], reflector: Reflector(.EnigmaB), plugboard: Plugboard())
+        let machine = makeMachine()
         print(try! machine.encode("A"))
+    }
+
+    func testThatRotorsAdvanceAtNotchPositions() {
+        let machine = makeMachine()
+        let rotors = machine.rotors
+        let rotorPermutations = Int(pow(Double(Cryptor.alphabet.count), 3.0))
+        for _ in 0..<rotorPermutations {
+            let rotorIPosition = rotors[0].position
+            let rotorIIPosition = rotors[1].position
+            let rotorIIIPosition = rotors[2].position
+            machine.advanceRotors()
+            // Right-most rotor always advances.
+            XCTAssertEqual(rotors[2].position, (rotorIIIPosition + 1) % rotors[2].series.count)
+            // Middle rotor advances if right-most rotor is at notch position.
+            if rotors[2].position == rotors[2].notch! {
+                XCTAssertEqual(rotors[1].position, (rotorIIPosition + 1) % rotors[1].series.count)
+            }
+            // Left-most rotor advances if middle rotor is at notch position.
+            if rotors[1].position == rotors[1].notch! {
+                XCTAssertEqual(rotors[0].position, (rotorIPosition + 1) % rotors[0].series.count)
+            }
+        }
     }
 }
 

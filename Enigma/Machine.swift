@@ -21,17 +21,17 @@ class Machine {
     }
 
     func encode(c: Character) throws -> Character {
+        advanceRotors()
         var output = c
         output = try plugboard.encode(output)
-        for rotor in rotors {
-            output = try rotor.encode(output)
-        }
-        output = try reflector.encode(output)
         for rotor in rotors.reverse() {
             output = try rotor.encode(output)
         }
-        output = try plugboard.encode(output)
-        advanceRotors()
+        output = try reflector.encode(output)
+        for rotor in rotors {
+            output = try rotor.inverseEncode(output)
+        }
+        output = try plugboard.inverseEncode(output)
         return output
     }
 

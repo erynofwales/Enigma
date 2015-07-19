@@ -44,6 +44,17 @@ class Machine {
     }
 
     private func advanceRotors() {
-
+        var shouldAdvance = true    // Always advance the first rotor
+        for rotor in rotors.reverse() {
+            if shouldAdvance {
+                rotor.advance()
+            }
+            // Advance the next rotor if this rotor is in the notch position.
+            if let notch = rotor.notch {
+                shouldAdvance = rotor.position == notch
+            } else {
+                shouldAdvance = false
+            }
+        }
     }
 }

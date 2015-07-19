@@ -11,6 +11,15 @@ import XCTest
 
 let alphaSeries = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
+
+class MachineTests: XCTestCase {
+    func testThatItTurnsOn() {
+        let machine = try! Machine(rotors: [Rotor(.EnigmaI), Rotor(.EnigmaII), Rotor(.EnigmaIII)], reflector: Reflector(.EnigmaB), plugboard: Plugboard())
+        print(try! machine.encode("A"))
+    }
+}
+
+
 class RotorTests: XCTestCase {
     let rotorSeries = "EKMFLGDQVZNTOWYHXUSPAIBRCJ"
 

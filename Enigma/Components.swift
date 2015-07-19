@@ -100,6 +100,10 @@ class Rotor: FixedRotor {
         case EnigmaETW = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     }
 
+    convenience init(_ wiring: Wiring) throws {
+        try self.init(series: wiring.rawValue)
+    }
+
     /** The position of first letter in `series` in the `alphabet`. */
     var position: Int = 0 {
         willSet {
@@ -140,6 +144,10 @@ class Reflector: FixedRotor {
 
     enum Error: ErrorType {
         case InvalidReflection
+    }
+
+    convenience init(_ wiring: Wiring) throws {
+        try self.init(series: wiring.rawValue)
     }
 
     override init(series: [Character]) throws {

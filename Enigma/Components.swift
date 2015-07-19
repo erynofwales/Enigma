@@ -128,6 +128,15 @@ class Rotor: FixedRotor {
         }
     }
 
+    /** An offset at which the adjacent rotor should be advanced by one position. */
+    var notch: Int? {
+        willSet {
+            if let newInt = newValue {
+                self.notch = newInt % series.count
+            }
+        }
+    }
+
     func advance(count: Int = 1) {
         position = (position + count) % Rotor.alphabet.count
     }

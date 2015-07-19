@@ -59,6 +59,38 @@ class FixedRotor: Cryptor, Encoder {
 
 /** Rotors are FixedRotors that have a variable position, which offsets the alphabet from the series and changes which character is substituted for a given input. */
 class Rotor: FixedRotor {
+    /** Standard rotor wirings for various iterations of Enigma machine. Most Enigma machines had three rotors in place. Some variations also had additional rotors that could be swapped in. UKW is the reflector, the _Umkehrwalze_ in German. ETW is the entry plate, the _Eintrittswalze_ in German. The ETW was a simple pass-through in the German Enigma machine, but in other variations did another substitution. */
+    enum Wiring: String {
+        // Commercial Enigma
+        case CommercialI = "DMTWSILRUYQNKFEJCAZBPGXOHV"
+        case CommercialII = "HQZGPJTMOBLNCIFDYAWVEUSRKX"
+        case CommercialIII = "UQNTLSZFMREHDPXKIBVYGJCWOA"
+        // German Railway
+        case RocketI = "JGDQOXUSCAMIFRVTPNEWKBLZYH"
+        case RocketII = "NTZPSFBOKMWRCJDIVLAEYUXHGQ"
+        case RocketIII = "JVIUBHTCDYAKEQZPOSGXNRMWFL"
+        case RocketUKW = "QYHOGNECVPUZTFDJAXWMKISRBL"
+        case RocketETW = "QWERTZUIOASDFGHJKPYXCVBNML"
+        // Swiss K
+        case SwissKI = "PEZUOHXSCVFMTBGLRINQJWAYDK"
+        case SwissKII = "ZOUESYDKFWPCIQXHMVBLGNJRAT"
+        case SwissKIII = "EHRVXGAOBQUSIMZFLYNWKTPDJC"
+        case SwissKUKW = "IMETCGFRAYSQBZXWLHKDVUPOJN"
+        //case SwissKETW = "QWERTZUIOASDFGHJKPYXCVBNML"
+        // German Army/Navy Enigma
+        case EnigmaI = "EKMFLGDQVZNTOWYHXUSPAIBRCJ"
+        case EnigmaII = "AJDKSIRUXBLHWTMCQGZNPYFVOE"
+        case EnigmaIII = "BDFHJLCPRTXVZNYEIWGAKMUSQO"
+        case EnigmaM3IV = "ESOVPZJAYQUIRHXLNFTGKDCMWB"
+        case EnigmaM3V = "VZBRGITYUPSDNHLXAWMJQOFECK"
+        case EnigmaM4VI = "JPGVOUMFYQBENHZRDKASXLICTW"
+        case EnigmaM4VII = "NZJHGRCXMYSWBOUFAIVLPEKQDT"
+        case EnigmaM4VIII = "FKQHTLXOCBJSPDZRAMEWNIUYGV"
+        case EnigmaM4R2Beta = "LEYJVCNIXWPBQMDRTAKZGFUHOS"
+        case EnigmaM4R2Gamma = "FSOKANUERHMBTIYCWLQPZXVGJD"
+        case EnigmaETW = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    }
+
     /** The position of first letter in `series` in the `alphabet`. */
     var position: Int = 0 {
         willSet {

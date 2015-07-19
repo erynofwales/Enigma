@@ -13,28 +13,37 @@ let alphaSeries = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 
 class MachineTests: XCTestCase {
-    func makeMachine() -> Machine! {
+    var machine: Machine!
+
+    override func setUp() {
         do {
             let rotors = [try Rotor(.EnigmaI), try Rotor(.EnigmaII), try Rotor(.EnigmaIII)]
-            rotors[0].notch = 17
-            rotors[1].notch = 5
-            rotors[2].notch = 22
-            return Machine(rotors: rotors, reflector: try Reflector(.EnigmaB), plugboard: Plugboard())
+            self.machine = Machine(rotors: rotors, reflector: try Reflector(.EnigmaB), plugboard: Plugboard())
         } catch let error {
             XCTFail("Error while creating machine: \(error)")
         }
-        // Never reached
-        return nil
     }
 
-    func testThatItTurnsOn() {
-        let machine = makeMachine()
-        print(try! machine.encode("A"))
+    func testThatMachineEncodesWithoutRotorStepping() {
+        machine.rotorAdvanceEnabled = false
+        let unsteppedSeries = "UEJOBTPZWCNSRKDGVMLFAQIYXH"
+        for (plainCharacter, cipherCharacter) in zip(alphaSeries.characters, unsteppedSeries.characters) {
+            do {
+                let encodedCharacter = try machine.encode(plainCharacter)
+                let decodedCharacter = try machine.encode(cipherCharacter)
+                XCTAssertEqual(encodedCharacter, cipherCharacter)
+                XCTAssertEqual(decodedCharacter, plainCharacter)
+            } catch let error {
+                XCTFail("Error doing basic encoding: \(error)")
+            }
+        }
     }
 
     func testThatRotorsAdvanceAtNotchPositions() {
-        let machine = makeMachine()
         let rotors = machine.rotors
+        rotors[0].notch = 17
+        rotors[1].notch = 5
+        rotors[2].notch = 22
         let rotorPermutations = Int(pow(Double(Cryptor.alphabet.count), 3.0))
         for _ in 0..<rotorPermutations {
             let rotorIPosition = rotors[0].position
@@ -52,6 +61,15 @@ class MachineTests: XCTestCase {
                 XCTAssertEqual(rotors[0].position, (rotorIPosition + 1) % rotors[0].series.count)
             }
         }
+    }
+
+    func testThatEncodingWithRotorAdvanceWorks() {
+        let rotors = machine.rotors
+        rotors[0].notch = 17
+        rotors[1].notch = 5
+        rotors[2].notch = 22
+        let encoded = try! machine.encode("A")
+        print("encoded: \(encoded)")
     }
 }
 
@@ -76,30 +94,24 @@ class RotorTests: XCTestCase {
         }
     }
 
-    func testThatRotorCanAdvanceToRot13() {
+    func testThatIdentityRotorReturnsSameCharacters() {
         let rotor = makeRotorWithSeries(alphaSeries)
-        rotor.advance(13)
-        for (plainCharacter, cipherCharacter) in zip(alphaSeries.characters, rot13Series.characters) {
-            XCTAssertEqual(try! rotor.encode(plainCharacter), cipherCharacter)
-        }
-    }
-
-    func testThatRotorCanSetToRot13() {
-        let rotor = makeRotorWithSeries(alphaSeries)
-        rotor.position = 13
-        for (plainCharacter, cipherCharacter) in zip(alphaSeries.characters, rot13Series.characters) {
-            XCTAssertEqual(try! rotor.encode(plainCharacter), cipherCharacter)
+        for c in alphaSeries.characters {
+            XCTAssertEqual(try! rotor.encode(c), c)
         }
     }
 
     func testThatRotorCanDoInverseEncoding() {
         let rotor = makeRotorWithSeries(rotorSeries)
-        for (plainCharacter, cipherCharacter) in zip(alphaSeries.characters, rotorSeries.characters) {
+        var encodedCharacter: Character!
+        var originalCharacter: Character!
+        for plainCharacter in alphaSeries.characters {
             do {
-                let encodedCharacter = try rotor.inverseEncode(cipherCharacter)
-                XCTAssertEqual(encodedCharacter, plainCharacter)
+                encodedCharacter = try rotor.encode(plainCharacter)
+                originalCharacter = try rotor.inverseEncode(encodedCharacter)
+                XCTAssertEqual(originalCharacter, plainCharacter)
             } catch let error {
-                XCTFail("Error inverse-encoding \(cipherCharacter) -> \(plainCharacter): \(error)")
+                XCTFail("Error inverse-encoding \(plainCharacter) -> \(encodedCharacter) -> \(originalCharacter): \(error)")
             }
         }
     }

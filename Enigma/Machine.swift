@@ -14,6 +14,8 @@ class Machine {
     let reflector: Reflector
     let plugboard: Plugboard
 
+    var rotorAdvanceEnabled: Bool = true
+
     init(rotors: [Rotor], reflector: Reflector, plugboard: Plugboard) {
         self.rotors = rotors
         self.reflector = reflector
@@ -21,7 +23,9 @@ class Machine {
     }
 
     func encode(c: Character) throws -> Character {
-        advanceRotors()
+        if rotorAdvanceEnabled {
+            advanceRotors()
+        }
         var output = c
         output = try plugboard.encode(output)
         for rotor in rotors.reverse() {

@@ -22,17 +22,26 @@ class MachineTests: XCTestCase {
 
 class RotorTests: XCTestCase {
     let rotorSeries = "EKMFLGDQVZNTOWYHXUSPAIBRCJ"
+    let rot13Series = "NOPQRSTUVWXYZABCDEFGHIJKLM"
+
+    func makeRotorWithSeries(series: String) -> Rotor! {
+        do {
+            return try Rotor(series: series)
+        } catch let error {
+            XCTFail("Unable to create rotor: \(error)")
+        }
+        return nil
+    }
 
     func testThatUnadvancedSubstitutionWorks() {
-        let rotor = try! Rotor(series: rotorSeries)
+        let rotor = makeRotorWithSeries(rotorSeries)
         for (plainCharacter, cipherCharacter) in zip(alphaSeries.characters, rotorSeries.characters) {
             XCTAssertEqual(try! rotor.encode(plainCharacter), cipherCharacter)
         }
     }
 
     func testThatRotorCanAdvanceToRot13() {
-        let rot13Series = "NOPQRSTUVWXYZABCDEFGHIJKLM"
-        let rotor = try! Rotor(series: alphaSeries)
+        let rotor = makeRotorWithSeries(alphaSeries)
         rotor.advance(13)
         for (plainCharacter, cipherCharacter) in zip(alphaSeries.characters, rot13Series.characters) {
             XCTAssertEqual(try! rotor.encode(plainCharacter), cipherCharacter)
@@ -40,11 +49,36 @@ class RotorTests: XCTestCase {
     }
 
     func testThatRotorCanSetToRot13() {
-        let rot13Series = "NOPQRSTUVWXYZABCDEFGHIJKLM"
-        let rotor = try! Rotor(series: alphaSeries)
+        let rotor = makeRotorWithSeries(alphaSeries)
         rotor.position = 13
         for (plainCharacter, cipherCharacter) in zip(alphaSeries.characters, rot13Series.characters) {
             XCTAssertEqual(try! rotor.encode(plainCharacter), cipherCharacter)
+        }
+    }
+
+    func testThatRotorCanDoInverseEncoding() {
+        let rotor = makeRotorWithSeries(rotorSeries)
+        for (plainCharacter, cipherCharacter) in zip(alphaSeries.characters, rotorSeries.characters) {
+            do {
+                let encodedCharacter = try rotor.inverseEncode(cipherCharacter)
+                XCTAssertEqual(encodedCharacter, plainCharacter)
+            } catch let error {
+                XCTFail("Error inverse-encoding \(cipherCharacter) -> \(plainCharacter): \(error)")
+            }
+        }
+    }
+
+    func testThatRingSettingWorks() {
+        let rotor = makeRotorWithSeries(alphaSeries)
+        rotor.ringPosition = 1
+        let characters = Array(alphaSeries.characters)
+        for (index, c) in alphaSeries.characters.enumerate() {
+            do {
+                let encodedCharacter = try rotor.encode(c)
+                XCTAssertEqual(encodedCharacter, characters[(index + 1) % characters.count])
+            } catch let error {
+                XCTFail("Error encoding with ring setting = 1: \(error)")
+            }
         }
     }
 }

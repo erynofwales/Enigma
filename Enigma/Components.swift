@@ -17,6 +17,7 @@ enum EncoderError: ErrorType {
 
 protocol Encoder {
     func encode(c: Character) throws -> Character
+    func inverseEncode(c: Character) throws -> Character
 }
 
 
@@ -50,6 +51,14 @@ class FixedRotor: Cryptor, Encoder {
     func encode(c: Character) throws -> Character {
         if let offset = FixedRotor.alphabet.indexOf(c) {
             return series[offset]
+        } else {
+            throw EncoderError.InvalidCharacter(ch: c)
+        }
+    }
+
+    func inverseEncode(c: Character) throws -> Character {
+        if let offset = series.indexOf(c) {
+            return FixedRotor.alphabet[offset]
         } else {
             throw EncoderError.InvalidCharacter(ch: c)
         }
@@ -109,6 +118,14 @@ class Rotor: FixedRotor {
             throw EncoderError.InvalidCharacter(ch: c)
         }
     }
+
+    override func inverseEncode(c: Character) throws -> Character {
+        if let offset = series.indexOf(c) {
+            return Rotor.alphabet[(offset + ringPosition + position) % Rotor.alphabet.count]
+        } else {
+            throw EncoderError.InvalidCharacter(ch: c)
+        }
+    }
 }
 
 
@@ -161,5 +178,9 @@ class Plugboard: Cryptor, Encoder {
         } else {
             throw EncoderError.InvalidCharacter(ch: c)
         }
+    }
+
+    func inverseEncode(c: Character) throws -> Character {
+        return try encode(c)
     }
 }

@@ -76,7 +76,7 @@ class FixedRotor: Cryptor, Encoder {
 }
 
 
-/** Rotors are FixedRotors that have a variable position, which offsets the alphabet from the series and changes which character is substituted for a given input. */
+/** Rotors are FixedRotors that _not_ fixed. They have a variable position, which offsets the alphabet from the series and changes which character is substituted for a given input. Rotors also have a variable `ringPosition`, _Ringstellung_ in German, which offsets the alphabet further. The Ringstellung was set as part of the machine setup, while the position changed based on how many characters were encoded. */
 class Rotor: FixedRotor {
     /** Standard rotor wirings for various iterations of Enigma machine. Most Enigma machines had three rotors in place. Some variations also had additional rotors that could be swapped in. UKW is the reflector, the _Umkehrwalze_ in German. ETW is the entry plate, the _Eintrittswalze_ in German. The ETW was a simple pass-through in the German Enigma machine, but in other variations did another substitution. */
     enum Wiring: String {

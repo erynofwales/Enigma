@@ -95,6 +95,7 @@ class Rotor: FixedRotor {
         case SwissKII = "ZOUESYDKFWPCIQXHMVBLGNJRAT"
         case SwissKIII = "EHRVXGAOBQUSIMZFLYNWKTPDJC"
         case SwissKUKW = "IMETCGFRAYSQBZXWLHKDVUPOJN"
+        // TODO: The SwissK ETW was the same as the Rocket ETW. How to represent this in an enum?
         //case SwissKETW = "QWERTZUIOASDFGHJKPYXCVBNML"
         // German Army/Navy Enigma
         case EnigmaI = "EKMFLGDQVZNTOWYHXUSPAIBRCJ"
@@ -105,9 +106,10 @@ class Rotor: FixedRotor {
         case EnigmaM4VI = "JPGVOUMFYQBENHZRDKASXLICTW"
         case EnigmaM4VII = "NZJHGRCXMYSWBOUFAIVLPEKQDT"
         case EnigmaM4VIII = "FKQHTLXOCBJSPDZRAMEWNIUYGV"
+        case EnigmaETW = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        // M4 fourth roters, used with the "thin" reflectors
         case EnigmaM4R2Beta = "LEYJVCNIXWPBQMDRTAKZGFUHOS"
         case EnigmaM4R2Gamma = "FSOKANUERHMBTIYCWLQPZXVGJD"
-        case EnigmaETW = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     }
 
     convenience init(_ wiring: Wiring) throws {
@@ -203,6 +205,7 @@ class Plugboard: Cryptor, Encoder {
     }
 
     func inverseEncode(c: Character) throws -> Character {
+        // Plugboards are symmetric. That is, if "A" -> "H", then "H" -> "A".
         return try encode(c)
     }
 }

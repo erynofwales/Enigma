@@ -107,7 +107,14 @@ class Rotor: FixedRotor {
     /** The position of first letter in `series` in the `alphabet`. */
     var position: Int = 0 {
         willSet {
-            self.position = newValue % Cryptor.alphabet.count
+            self.position = newValue % series.count
+        }
+    }
+
+    /** Ring position, the Ringstellung. This offsets the alphabet. */
+    var ringPosition: Int = 0 {
+        willSet {
+            self.ringPosition = newValue % series.count
         }
     }
 
@@ -117,7 +124,7 @@ class Rotor: FixedRotor {
 
     override func encode(c: Character) throws -> Character {
         if let offset = Rotor.alphabet.indexOf(c) {
-            return series[(offset + position) % series.count]
+            return series[(offset + ringPosition + position) % series.count]
         } else {
             throw EncoderError.InvalidCharacter(ch: c)
         }

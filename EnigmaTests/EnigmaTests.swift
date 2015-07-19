@@ -9,8 +9,9 @@
 import XCTest
 @testable import Enigma
 
+let alphaSeries = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
 class RotorTests: XCTestCase {
-    let alphaSeries = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     let rotorSeries = "EKMFLGDQVZNTOWYHXUSPAIBRCJ"
 
     func testThatUnadvancedSubstitutionWorks() {
@@ -27,5 +28,21 @@ class RotorTests: XCTestCase {
         for (plainCharacter, cipherCharacter) in zip(alphaSeries.characters, rot13Series.characters) {
             XCTAssertEqual(try! rotor.encode(plainCharacter), cipherCharacter)
         }
+    }
+}
+
+
+class PlugboardTests: XCTestCase {
+    func testThatEmptyPlugboardPassesThroughAllCharacters() {
+        let plugboard = try! Enigma.Plugboard()
+        for c in alphaSeries.characters {
+            XCTAssertEqual(try! plugboard.encode(c), c)
+        }
+    }
+
+    func testThatPlugboardPairsAreBidirectional() {
+        let plugboard = try! Enigma.Plugboard(pairs: [("A", "H")])
+        XCTAssertEqual(try! plugboard.encode("A"), "H")
+        XCTAssertEqual(try! plugboard.encode("H"), "A")
     }
 }

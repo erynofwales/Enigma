@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8121.17" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8101.14"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Machine View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="MachineViewController" customModule="Enigma" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -15,8 +17,58 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lPp-Vw-Kkc">
+                                <rect key="frame" x="20" y="385" width="560" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="veV-CP-S8o">
+                                <rect key="frame" x="20" y="186" width="560" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Input" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N6b-8J-RIo">
+                                <rect key="frame" x="20" y="157" width="40" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Output" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AlI-sc-xma">
+                                <rect key="frame" x="20" y="356" width="54" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ENIGMA" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OG3-jo-BcR">
+                                <rect key="frame" x="249" y="284" width="102" height="32"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="26"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="lPp-Vw-Kkc" secondAttribute="trailing" id="0Lf-hh-7eP"/>
+                            <constraint firstItem="OG3-jo-BcR" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="EzE-De-tL8"/>
+                            <constraint firstItem="veV-CP-S8o" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" multiplier="2/3" constant="1" id="YLt-rQ-JYL"/>
+                            <constraint firstItem="lPp-Vw-Kkc" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="Zr1-Zj-oKc"/>
+                            <constraint firstItem="OG3-jo-BcR" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="aif-2j-b4L"/>
+                            <constraint firstItem="veV-CP-S8o" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="daS-T3-y7c"/>
+                            <constraint firstItem="lPp-Vw-Kkc" firstAttribute="top" secondItem="AlI-sc-xma" secondAttribute="bottom" constant="8" id="gUe-JU-ttY"/>
+                            <constraint firstItem="lPp-Vw-Kkc" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="hDD-RQ-QzL"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="veV-CP-S8o" secondAttribute="trailing" id="imY-X9-KfU"/>
+                            <constraint firstItem="lPp-Vw-Kkc" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" multiplier="4/3" id="p4w-J5-kY8"/>
+                            <constraint firstItem="veV-CP-S8o" firstAttribute="leading" secondItem="N6b-8J-RIo" secondAttribute="leading" id="urR-2m-3ZH"/>
+                            <constraint firstItem="veV-CP-S8o" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="xSF-aR-mbG"/>
+                            <constraint firstItem="AlI-sc-xma" firstAttribute="leading" secondItem="lPp-Vw-Kkc" secondAttribute="leading" id="xyS-CG-Xxo"/>
+                            <constraint firstItem="veV-CP-S8o" firstAttribute="top" secondItem="N6b-8J-RIo" secondAttribute="bottom" constant="8" id="yTm-ML-f6a"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="inputTextField" destination="veV-CP-S8o" id="gzv-V0-jSF"/>
+                        <outlet property="outputTextField" destination="lPp-Vw-Kkc" id="Aik-eC-5Ia"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

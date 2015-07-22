@@ -11,6 +11,13 @@ import UIKit
 class MachineViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var inputTextField: UITextField!
     @IBOutlet weak var outputTextField: UITextField!
+    @IBOutlet var rotorPositionLabels: [UILabel]!
+
+    var machine: Machine! = nil {
+        didSet {
+            updateRotorLabels()
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,9 +43,11 @@ class MachineViewController: UIViewController, UITextFieldDelegate {
 
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         if textField === inputTextField {
-            var machine: Machine! = nil
             do {
                 machine = Machine(rotors: [try Rotor(.EnigmaI), try Rotor(.EnigmaII), try Rotor(.EnigmaIII)], reflector: try Reflector(.EnigmaB), plugboard: Plugboard())
+                machine.rotors[0].notch = 17
+                machine.rotors[1].notch = 5
+                machine.rotors[2].notch = 22
             } catch let error {
                 print("Error setting up machine: \(error)")
                 return true
@@ -51,6 +60,7 @@ class MachineViewController: UIViewController, UITextFieldDelegate {
                     return true
                 }
             }
+            updateRotorLabels()
             return false
         }
         return true
@@ -62,6 +72,12 @@ class MachineViewController: UIViewController, UITextFieldDelegate {
             return true
         }
         return false
+    }
+
+    private func updateRotorLabels() {
+        for (idx, rotor) in machine.rotors.enumerate() {
+            rotorPositionLabels[idx].text = String(rotor.position)
+        }
     }
 }
 

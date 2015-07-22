@@ -42,22 +42,46 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ENIGMA" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OG3-jo-BcR">
-                                <rect key="frame" x="249" y="184" width="102" height="32"/>
+                                <rect key="frame" x="249" y="159" width="102" height="32"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="26"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I0H-rn-6yj">
+                                <rect key="frame" x="209" y="215" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QLp-22-UB7">
+                                <rect key="frame" x="279" y="215" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yY6-0s-yPA">
+                                <rect key="frame" x="349" y="215" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="lPp-Vw-Kkc" secondAttribute="trailing" id="0Lf-hh-7eP"/>
+                            <constraint firstItem="yY6-0s-yPA" firstAttribute="leading" secondItem="QLp-22-UB7" secondAttribute="trailing" constant="28" id="4tB-F4-hxI"/>
+                            <constraint firstItem="QLp-22-UB7" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="6vR-5b-1n1"/>
+                            <constraint firstItem="QLp-22-UB7" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" multiplier="9/12" id="ClG-5k-K8N"/>
                             <constraint firstItem="OG3-jo-BcR" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="EzE-De-tL8"/>
+                            <constraint firstItem="QLp-22-UB7" firstAttribute="leading" secondItem="I0H-rn-6yj" secondAttribute="trailing" constant="28" id="OAX-sv-URg"/>
                             <constraint firstItem="veV-CP-S8o" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" multiplier="1/3" constant="1" id="YLt-rQ-JYL"/>
                             <constraint firstItem="lPp-Vw-Kkc" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="Zr1-Zj-oKc"/>
-                            <constraint firstItem="OG3-jo-BcR" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" multiplier="2/3" id="aif-2j-b4L"/>
+                            <constraint firstItem="OG3-jo-BcR" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" multiplier="7/12" id="aif-2j-b4L"/>
+                            <constraint firstItem="QLp-22-UB7" firstAttribute="centerY" secondItem="I0H-rn-6yj" secondAttribute="centerY" id="bJF-Bj-pZY"/>
                             <constraint firstItem="veV-CP-S8o" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="daS-T3-y7c"/>
                             <constraint firstItem="lPp-Vw-Kkc" firstAttribute="top" secondItem="AlI-sc-xma" secondAttribute="bottom" constant="8" id="gUe-JU-ttY"/>
                             <constraint firstItem="lPp-Vw-Kkc" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="hDD-RQ-QzL"/>
+                            <constraint firstItem="yY6-0s-yPA" firstAttribute="centerY" secondItem="I0H-rn-6yj" secondAttribute="centerY" id="haq-Vh-JKE"/>
                             <constraint firstAttribute="trailingMargin" secondItem="veV-CP-S8o" secondAttribute="trailing" id="imY-X9-KfU"/>
                             <constraint firstItem="lPp-Vw-Kkc" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="p4w-J5-kY8"/>
                             <constraint firstItem="veV-CP-S8o" firstAttribute="leading" secondItem="N6b-8J-RIo" secondAttribute="leading" id="urR-2m-3ZH"/>
@@ -70,6 +94,9 @@
                         <outlet property="inputTextField" destination="veV-CP-S8o" id="mYs-yV-wcc"/>
                         <outlet property="outputTextField" destination="lPp-Vw-Kkc" id="Aik-eC-5Ia"/>
                         <outlet property="view" destination="8bC-Xf-vdC" id="Lro-bX-NYd"/>
+                        <outletCollection property="rotorPositionLabels" destination="I0H-rn-6yj" collectionClass="NSMutableArray" id="MuE-cp-8WP"/>
+                        <outletCollection property="rotorPositionLabels" destination="QLp-22-UB7" collectionClass="NSMutableArray" id="E97-oe-RNg"/>
+                        <outletCollection property="rotorPositionLabels" destination="yY6-0s-yPA" collectionClass="NSMutableArray" id="rNa-Jd-2NB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

@@ -176,15 +176,6 @@ class Rotor: FixedRotor {
         return Cryptor.alphabet[adjustedPosition]
     }
 
-    func convertToInverseExitCharacter(c: Character) throws -> Character {
-        let encodedPosition = try indexOfInAlphabet(c)
-        var adjustedPosition = (encodedPosition - position) % Cryptor.alphabet.count
-        if adjustedPosition < 0 {
-            adjustedPosition += Cryptor.alphabet.count
-        }
-        return Cryptor.alphabet[adjustedPosition]
-    }
-
     override func encode(c: Character) throws -> Character {
         let adjustedPosition = try getIndexAdjustedForRotation(c)
         let encodedChar = rotatedSeries[adjustedPosition]
@@ -198,7 +189,7 @@ class Rotor: FixedRotor {
         let adjustedChar = rotatedSeries[adjustedPosition]
         let lookMeUp = try indexOfInSeries(adjustedChar)
         let decodedChar = Cryptor.alphabet[lookMeUp]
-        let finalChar = try convertToInverseExitCharacter(decodedChar)
+        let finalChar = try convertToExitCharacter(decodedChar)
         print("Encode (pos \(position): \(c) -> \(finalChar)")
         return finalChar
     }

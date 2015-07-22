@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C027A7751B5C5ED80021FF3A /* RotorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C027A7731B5C5ED80021FF3A /* RotorViewController.swift */; };
-		C027A7761B5C5ED80021FF3A /* RotorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C027A7741B5C5ED80021FF3A /* RotorViewController.xib */; };
 		C04D337F1B5B3F6100E2888E /* Machine.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04D337E1B5B3F6100E2888E /* Machine.swift */; };
 		C0DA3A911B5AACB300D8D68E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DA3A901B5AACB300D8D68E /* AppDelegate.swift */; };
 		C0DA3A931B5AACB300D8D68E /* MachineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DA3A921B5AACB300D8D68E /* MachineViewController.swift */; };
@@ -38,8 +36,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		C027A7731B5C5ED80021FF3A /* RotorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RotorViewController.swift; sourceTree = "<group>"; };
-		C027A7741B5C5ED80021FF3A /* RotorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RotorViewController.xib; sourceTree = "<group>"; };
 		C04D337E1B5B3F6100E2888E /* Machine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Machine.swift; sourceTree = "<group>"; };
 		C0DA3A8D1B5AACB300D8D68E /* Enigma.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Enigma.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0DA3A901B5AACB300D8D68E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -113,8 +109,6 @@
 				C0DA3A9C1B5AACB300D8D68E /* Info.plist */,
 				C0DA3ABE1B5AB49200D8D68E /* Components.swift */,
 				C04D337E1B5B3F6100E2888E /* Machine.swift */,
-				C027A7731B5C5ED80021FF3A /* RotorViewController.swift */,
-				C027A7741B5C5ED80021FF3A /* RotorViewController.xib */,
 			);
 			path = Enigma;
 			sourceTree = "<group>";
@@ -241,7 +235,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C0DA3A9B1B5AACB300D8D68E /* LaunchScreen.storyboard in Resources */,
-				C027A7761B5C5ED80021FF3A /* RotorViewController.xib in Resources */,
 				C0DA3A981B5AACB300D8D68E /* Assets.xcassets in Resources */,
 				C0DA3A961B5AACB300D8D68E /* Main.storyboard in Resources */,
 			);
@@ -270,7 +263,6 @@
 			files = (
 				C04D337F1B5B3F6100E2888E /* Machine.swift in Sources */,
 				C0DA3ABF1B5AB49200D8D68E /* Components.swift in Sources */,
-				C027A7751B5C5ED80021FF3A /* RotorViewController.swift in Sources */,
 				C0DA3A931B5AACB300D8D68E /* MachineViewController.swift in Sources */,
 				C0DA3A911B5AACB300D8D68E /* AppDelegate.swift in Sources */,
 			);

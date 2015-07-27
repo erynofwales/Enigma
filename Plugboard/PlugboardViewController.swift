@@ -36,15 +36,32 @@ class PlugboardViewController: UICollectionViewController, UICollectionViewDeleg
     @IBAction func connectPlugsPanGesture(recognizer: UIPanGestureRecognizer) {
         switch recognizer.state {
         case .Began:
+            print("drag began")
             let plugView = PlugLineView(frame: view.bounds)
+            let start = recognizer.locationInView(self.view)
+            let translation = recognizer.translationInView(self.view)
+            plugView.startPoint = start
+            plugView.endPoint = CGPoint(x: start.x + translation.x, y: start.y + translation.y)
             view.addSubview(plugView)
             plugViews.append(plugView)
         case .Changed:
-            break
+            print("drag changed")
+            if let plugView = plugViews.last {
+                if let start = plugView.startPoint {
+                    let translation = recognizer.translationInView(self.view)
+                    plugView.endPoint = CGPoint(x: start.x + translation.x, y: start.y + translation.y)
+                }
+            }
         case .Ended:
-            break
+            print("drag ended")
+            if let plugView = plugViews.last {
+                if let start = plugView.startPoint {
+                    let translation = recognizer.translationInView(self.view)
+                    plugView.endPoint = CGPoint(x: start.x + translation.x, y: start.y + translation.y)
+                }
+            }
         case .Failed:
-            break
+            print("drag failed")
         case .Cancelled:
             print("drag cancelled")
         case .Possible:
@@ -119,8 +136,16 @@ class PlugCollectionViewCell: UICollectionViewCell {
 
 
 class PlugLineView: UIView {
-    var startPoint: CGPoint?
-    var endPoint: CGPoint?
+    var startPoint: CGPoint? {
+        didSet {
+            setNeedsDisplay()
+        }
+    }
+    var endPoint: CGPoint? {
+        didSet {
+            setNeedsDisplay()
+        }
+    }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -135,6 +160,7 @@ class PlugLineView: UIView {
     private func initCommon() {
         opaque = false
         backgroundColor = UIColor.clearColor()
+        userInteractionEnabled = false
     }
 
     override func drawRect(rect: CGRect) {
@@ -142,6 +168,9 @@ class PlugLineView: UIView {
             let path = UIBezierPath()
             path.moveToPoint(startPoint)
             path.addLineToPoint(endPoint)
+
+            UIColor.blackColor()
+            path.stroke()
         }
     }
 }

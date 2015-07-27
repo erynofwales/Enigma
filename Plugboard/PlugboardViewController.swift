@@ -33,6 +33,13 @@ class PlugboardViewController: UICollectionViewController, UICollectionViewDeleg
         alphabet = Array("ABCDEFGHIJKLMNOPQRSTUVWXYZ".characters)
     }
 
+    @IBAction func clear(sender: AnyObject) {
+        for plugView in plugViews {
+            plugView.removeFromSuperview()
+        }
+        plugViews.removeAll()
+    }
+
     @IBAction func connectPlugsPanGesture(recognizer: UIPanGestureRecognizer) {
         switch recognizer.state {
         case .Began:
